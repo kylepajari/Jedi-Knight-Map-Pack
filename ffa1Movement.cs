@@ -34,7 +34,7 @@ namespace MapScripts
         public static Timer platTimer = new Timer(1000);
         public static bool canMove;
 
-        public override System.Collections.IEnumerator OnLoadCoroutine(Level levelDefinition)
+        public override System.Collections.IEnumerator OnLoadCoroutine()
         {
             // Called when the level load
             //initialized = true; // Set it to true when your script are loaded
@@ -113,10 +113,10 @@ namespace MapScripts
             bigPlatMoveTime = 1f;
             platMoveTime = 2.0f;
             canMove = false;
-            return base.OnLoadCoroutine(levelDefinition);
+            return base.OnLoadCoroutine();
         }
 
-        public override void Update(Level levelDefinition)
+        public override void Update()
         {
             if (player == null)
             {
@@ -137,9 +137,9 @@ namespace MapScripts
                 for (int i = 0; i < bigPlats.Count; i++)
                 {
 
-                    if (Creature.list.Count != 0)
+                    if (Creature.allActive.Count != 0)
                     {
-                        foreach (Creature c in Creature.list)
+                        foreach (Creature c in Creature.allActive)
                         {
                             bigPlatEnemyInside[i] = TargetInsideCollider(c.transform.position, bigPlats[i].GetComponentInChildren<BoxCollider>());
                         }
@@ -332,7 +332,7 @@ namespace MapScripts
             return true;
         }
 
-        public override void OnUnload(Level levelDefinition)
+        public override void OnUnload()
         {
             // Called when the level unload
             bigPlats.Clear();
@@ -360,10 +360,10 @@ namespace MapScripts
             GameObject person = null;
             if (col.GetComponentInParent<Creature>() != null)
             {
-                if (Creature.list.Contains(col.GetComponentInParent<Creature>()))
+                if (Creature.allActive.Contains(col.GetComponentInParent<Creature>()))
                 {
-                    int i = Creature.list.IndexOf(col.GetComponentInParent<Creature>());
-                    person = Creature.list[i].gameObject;
+                    int i = Creature.allActive.IndexOf(col.GetComponentInParent<Creature>());
+                    person = Creature.allActive[i].gameObject;
                 }
             }
             if (person != null)

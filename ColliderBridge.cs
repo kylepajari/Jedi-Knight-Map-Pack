@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MapScriptsJKO
+namespace MapScripts
 {
     public class ColliderBridge : MonoBehaviour
     {

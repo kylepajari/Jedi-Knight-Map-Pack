@@ -40,7 +40,7 @@ namespace MapScripts
 
         public GameObject player;
 
-        public override System.Collections.IEnumerator OnLoadCoroutine(Level levelDefinition)
+        public override System.Collections.IEnumerator OnLoadCoroutine()
         {
 
             //set up sound sources
@@ -112,10 +112,10 @@ namespace MapScripts
             doorMoveTime = 4f;
             circleMoveTime = 1.5f;
             rectMoveTime = 1.5f;
-            return base.OnLoadCoroutine(levelDefinition);
+            return base.OnLoadCoroutine();
         }
 
-        public override void Update(Level levelDefinition)
+        public override void Update()
         {
             //spin fan
             fan.transform.Rotate(0.0f, 540.0f * Time.deltaTime, 0.0f, Space.Self);
@@ -317,7 +317,7 @@ namespace MapScripts
             return true;
         }
 
-        public override void OnUnload(Level levelDefinition)
+        public override void OnUnload()
         {
             // Called when the level unload
             doors.Clear();
@@ -348,10 +348,10 @@ namespace MapScripts
             GameObject person = null;
             if (col.GetComponentInParent<Creature>() != null)
             {
-                if (Creature.list.Contains(col.GetComponentInParent<Creature>()))
+                if (Creature.allActive.Contains(col.GetComponentInParent<Creature>()))
                 {
-                    int i = Creature.list.IndexOf(col.GetComponentInParent<Creature>());
-                    person = Creature.list[i].gameObject;
+                    int i = Creature.allActive.IndexOf(col.GetComponentInParent<Creature>());
+                    person = Creature.allActive[i].gameObject;
                 }
             }
             if (person != null)
@@ -368,6 +368,7 @@ namespace MapScripts
                         FFAbonus1Movement.doorPersonsInside[i].Add(person);
                         if (FFAbonus1Movement.doorPersonsInside[i].Count > 0)
                         {
+                            print("count: " + FFAbonus1Movement.doorPersonsInside[i].Count);
                             FFAbonus1Movement.doors[i].GetComponentInChildren<AudioSource>().Play();
                         }
                     }

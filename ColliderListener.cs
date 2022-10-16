@@ -4,7 +4,7 @@ using UnityEngine;
 using ThunderRoad;
 using System.Timers;
 
-namespace MapScriptsJKO
+namespace MapScripts
 {
     public class ColliderListener : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace MapScriptsJKO
                 ColliderBridge cb = collider.gameObject.AddComponent<ColliderBridge>();
                 cb.Initialize(this);
             }
-            if (transform.name.Contains("medpac") || transform.name.Contains("bacta"))
+            if(transform.name.Contains("medpac") || transform.name.Contains("bacta"))
             {
                 pickupSound = GameObject.Find("use_bacta").GetComponent<AudioSource>();
                 pickedUp = false;
@@ -32,11 +32,15 @@ namespace MapScriptsJKO
         {
             if (transform.name.Contains("medpac") || transform.name.Contains("bacta"))
             {
-                if (col.transform.root.name.Contains("PlayerDefault") && !pickedUp)
+                if(Player.currentCreature != null)
                 {
-                    pickedUp = true;
-                    PickupItem(transform.name, col);
+                    if (col.transform.root.name == Player.currentCreature.transform.root.name && !pickedUp)
+                    {
+                        pickedUp = true;
+                        PickupItem(transform.name, col);
+                    }
                 }
+                
             }
         }
 
@@ -52,7 +56,7 @@ namespace MapScriptsJKO
                 case string a when a.Contains("medpac"):
                     if (Player.currentCreature.currentHealth != Player.currentCreature.maxHealth)
                     {
-                        float health = Player.currentCreature.maxHealth / 2;
+                        float health = (Player.currentCreature.maxHealth / 2);
                         Player.currentCreature.Heal(health, null);
                         pickupSound.Play();
                         //cap for full health
@@ -66,7 +70,7 @@ namespace MapScriptsJKO
                 case string b when b.Contains("bacta"):
                     if (Player.currentCreature.currentHealth != Player.currentCreature.maxHealth)
                     {
-                        float health = Player.currentCreature.maxHealth / 4;
+                        float health = (Player.currentCreature.maxHealth / 4);
                         Player.currentCreature.Heal(health, null);
                         pickupSound.Play();
                         //cap for full health

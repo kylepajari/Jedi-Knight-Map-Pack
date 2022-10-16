@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ThunderRoad;
 
-namespace MapScriptsJKO
+namespace MapScripts
 {
     public class itemspickup : ItemModule
     {
