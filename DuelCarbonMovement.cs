@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace MapScriptsJKO
 {
-    class DuelCarbonMovement : LevelModule
+    public class DuelCarbonMovement : LevelModule
     {
         public static List<GameObject> Plats = new List<GameObject>();
         public List<Vector3> PlatStartPos = new List<Vector3>();
@@ -22,7 +22,7 @@ namespace MapScriptsJKO
         public static bool canMove;
 
 
-        public override System.Collections.IEnumerator OnLoadCoroutine(Level levelDefinition)
+        public override System.Collections.IEnumerator OnLoadCoroutine()
         {
             // Called when the level load
             //initialized = true; // Set it to true when your script are loaded
@@ -57,7 +57,7 @@ namespace MapScriptsJKO
 
             PlatMoveTime = 2f;
 
-            return base.OnLoadCoroutine(levelDefinition);
+            return base.OnLoadCoroutine();
 
         }
 
@@ -75,7 +75,7 @@ namespace MapScriptsJKO
             canMove = true;
         }
 
-        public override void Update(Level levelDefinition)
+        public override void Update()
         {
 
             //Platforms
@@ -158,7 +158,7 @@ namespace MapScriptsJKO
             return true;
         }
 
-        public override void OnUnload(Level levelDefinition)
+        public override void OnUnload()
         {
             // Called when the level unload
             Plats.Clear();
@@ -178,10 +178,10 @@ namespace MapScriptsJKO
             GameObject person = null;
             if (col.GetComponentInParent<Creature>() != null)
             {
-                if (Creature.list.Contains(col.GetComponentInParent<Creature>()))
+                if (Creature.allActive.Contains(col.GetComponentInParent<Creature>()))
                 {
-                    int i = Creature.list.IndexOf(col.GetComponentInParent<Creature>());
-                    person = Creature.list[i].gameObject;
+                    int i = Creature.allActive.IndexOf(col.GetComponentInParent<Creature>());
+                    person = Creature.allActive[i].gameObject;
                 }
             }
             if (person != null)

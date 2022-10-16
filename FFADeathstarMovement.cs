@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace MapScriptsJKO
 {
-    class FFADeathstarMovement : LevelModule
+    public class FFADeathstarMovement : LevelModule
     {
         //Doors variables
         public static List<GameObject> doors = new List<GameObject>();
@@ -39,7 +39,7 @@ namespace MapScriptsJKO
         public static Timer platTimer = new Timer(1000);
         public static bool canMove;
 
-        public override System.Collections.IEnumerator OnLoadCoroutine(Level levelDefinition)
+        public override System.Collections.IEnumerator OnLoadCoroutine()
         {
             // Called when the level load
             //initialized = true; // Set it to true when your script are loaded
@@ -146,7 +146,7 @@ namespace MapScriptsJKO
             platMoveTime = 2f;
             garPlatMoveTimeOut = 0.5f;
             garPlatMoveTimeIn = 3f;
-            return base.OnLoadCoroutine(levelDefinition);
+            return base.OnLoadCoroutine();
         }
 
         public static void SetTimer()
@@ -177,7 +177,7 @@ namespace MapScriptsJKO
             garCanMove = true;
         }
 
-        public override void Update(Level levelDefinition)
+        public override void Update()
         {
 
             //doors
@@ -354,7 +354,7 @@ namespace MapScriptsJKO
         }
 
 
-        public override void OnUnload(Level levelDefinition)
+        public override void OnUnload()
         {
             // Called when the level unload
             doors.Clear();
@@ -381,9 +381,9 @@ namespace MapScriptsJKO
             GameObject person = null;
             if(col.GetComponentInParent<Creature>() != null)
             {
-                if (Creature.list.Contains(col.GetComponentInParent<Creature>())){
-                    int i = Creature.list.IndexOf(col.GetComponentInParent<Creature>());
-                    person = Creature.list[i].gameObject;
+                if (Creature.allActive.Contains(col.GetComponentInParent<Creature>())){
+                    int i = Creature.allActive.IndexOf(col.GetComponentInParent<Creature>());
+                    person = Creature.allActive[i].gameObject;
                 }
             }
             if (person != null)
